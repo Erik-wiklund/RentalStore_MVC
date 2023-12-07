@@ -257,7 +257,8 @@ namespace RentalStore.Controllers
                 DurationMinutes = movie.DurationMinutes,
                 Genre = movie.Genre,
                 InStock = movie.InStock,
-                Rating = movie.Rating
+                Rating = movie.Rating,
+                Price = movie.Price,
                 // Add other properties as needed
             };
 
@@ -282,6 +283,7 @@ namespace RentalStore.Controllers
             movie.Genre = model.Genre;
             movie.InStock = model.InStock;
             movie.Rating = model.Rating;
+            movie.Price = model.Price;
 
             if (Request.Form.Files.Count > 0)
             {
