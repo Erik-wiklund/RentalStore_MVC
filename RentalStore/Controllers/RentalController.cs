@@ -302,8 +302,9 @@ namespace RentalStore.Controllers
 
             if (ModelState.IsValid)
             {
-                var rental = await context.Rentals.FindAsync(rentalId);
-
+                var rental = await context.Rentals
+                .Include(r => r.Movie) // Make sure to include the Movie data
+                .FirstOrDefaultAsync(r => r.Id == rentalId);
                 if (rental == null)
                 {
                     ViewBag.ErrorMessage = $"Rental with Id = {rentalId} cannot be found";
@@ -318,6 +319,12 @@ namespace RentalStore.Controllers
                     Score = Score,
                 };
 
+                var existingReviews = rental.Movie.Reviews;
+                var totalScore = rental.Movie.Reviews * existingReviews + Score;
+                rental.Movie.Reviews = totalScore / (existingReviews + 1);
+
+
+
                 context.Reviews.Add(review);
                 await context.SaveChangesAsync();
 
@@ -326,6 +333,7 @@ namespace RentalStore.Controllers
 
             return View("ReviewConfirmation");
         }
+
 
 
 
