@@ -1,0 +1,93 @@
+﻿@using RentalStore.Models
+@model List<RentalStore.Models.RentalViewModel>
+
+@{
+	ViewData["Title"] = "Index";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h1>Rentals</h1>
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<th>Title</th>
+			<th>Date Rented</th>
+			<th>Days rented</th>
+			<th>Image</th>
+			<th>Returned</th>
+			<th>Date returned</th>
+			<th>Return movie</th>
+			<th>Watch movie</th>
+			<th>Review</th>
+
+		</tr>
+	</thead>
+	<tbody>
+		@if (Model != null)
+		{
+
+			@foreach (var rental in Model)
+			{
+				<tr>
+					<td>@rental.Movie.Title</td>
+					<td>@rental.DateRented.ToString("yyyy/mm/dd")</td>
+					<td>@rental.NumberOfDaysRented</td>
+					<td>
+						@if (@rental.Movie.MovieImage != null)
+						{
+							<img id="profilePicture" style="width:50px;height:50px; object-fit:cover" src="data:image/*;base64,@(Convert.ToBase64String(@rental.Movie.MovieImage))">
+						}
+						else
+						{
+							<img src="../images/default_image.webp" alt="No Image" style="width:50px;height:50px; object-fit:cover">
+						}
+
+					</td>
+					<td>
+						<input type="checkbox" disabled checked="@rental.IsReturned" />
+					</td>
+					@if (@rental.DateReturned != null)
+					{
+						<td>@(rental.DateReturned.HasValue ? rental.DateReturned.Value.ToString("yyyy/MM/dd") : "N/A")</td>
+
+					}
+					else
+					{
+						<td>Movie not returned</td>
+					}
+					@if (@rental.IsReturned != true)
+					{
+						<td>
+							<form method="post" asp-controller="Rental" asp-action="ReturnMovie" asp-route-rentalId="@rental.Id">
+								<button type="submit" class="btn btn-primary">Return</button>
+							</form>
+						</td>
+						<td>
+							<a class="btn btn-primary" asp-route-streamId="@rental.Id">Stream</a>
+						</td>
+						<td>
+							<a class="btn btn-primary" style="pointer-events:none;">Leave Review</a>
+						</td>
+					}
+					else
+					{
+						<td>
+							<form method="post" asp-controller="Rental" asp-action="ReturnMovie" asp-route-rentalId="@rental.Id">
+								<button disabled type="submit" class="btn btn-primary">Return</button>
+							</form>
+						</td>
+						<td>
+							<a class="btn btn-primary" style="pointer-events:none;" asp-route-streamId="@rental.Id">Stream</a>
+						</td>
+						<td>
+							<a asp-action="CreateReview" asp-controller="Rental" asp-route-rentalId="@rental.Id" class="btn btn-primary">Leave Review</a>
+						</td>
+					}
+				</tr>
+			}
+		}
+		else
+		{
+			<p>No movies available.</p>
+		}
+	</tbody>
+</table>

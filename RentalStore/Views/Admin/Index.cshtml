@@ -1,0 +1,61 @@
+﻿@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div id="layoutSidenav">
+    <div id="layoutSidenav_nav">
+        <aside class="aside-element float-lg-start text-white" style="height: 50vh; width: 250px; position: absolute;">
+            <div id="sidebar" class="nav-collapse">
+                <!-- sidebar menu start-->
+                <ul class="sidebar-menu list-unstyled">
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-dark w-100 mb-2" href="/Home">
+                            <i class="icon_house_alt"></i>
+                            <span>Home</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-dark w-100 mb-2" asp-action="UserRoles" asp-controller="Admin">
+                            <i class="icon_house_alt"></i>
+                            <span>Manage Users</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-dark w-100 mb-2" asp-action="RoleManager" asp-controller="Admin">
+                            <i class="icon_house_alt"></i>
+                            <span>Manage Roles</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-dark w-100 mb-2" asp-action="MovieManager" asp-controller="Admin">
+                            <i class="icon_house_alt"></i>
+                            <span>Manage Movies</span>
+                        </a>
+                    </li>
+                    <!-- Add similar styling for other menu items -->
+                </ul>
+                <!-- sidebar menu end-->
+            </div>
+        </aside>
+    </div>
+    <div id="layoutSidenav_content" style="margin-left: 260px;">
+        <main>
+            <div class="container-fluid px-4">
+                <div id="content-container"></div>
+            </div>
+        </main>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function loadContent(url) {
+            $.get(url, function (data) {
+                jQuery('#content-container').html(data);
+            });
+        }
+    </script>
+}
+

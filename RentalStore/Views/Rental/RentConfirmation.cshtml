@@ -1,0 +1,13 @@
+﻿@model RentalViewModel
+
+@{
+    ViewData["Title"] = "Rent Confirmation";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Rent Confirmation</h1>
+
+<p>Thank you for renting the movie!</p>
+<p>Your rental ID is: @Model.Id</p>
+
+<a asp-controller="Home" asp-action="Index">Back to Home</a>

@@ -1,0 +1,13 @@
+﻿@model ReviewViewModel
+
+@{
+    ViewData["Title"] = "Review Confirmation";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Review Confirmation</h1>
+
+<p>Thank you for reviewing the movie!</p>
+<p>Your review ID is: @Model.Id</p>
+
+<a asp-controller="Home" asp-action="Index">Back to Home</a>

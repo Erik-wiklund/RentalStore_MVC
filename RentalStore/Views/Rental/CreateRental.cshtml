@@ -1,0 +1,44 @@
+﻿@model MovieViewModel
+
+@{
+    ViewData["Title"] = "Rent a Movie";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Rent a Movie - @Model.Title</h1>
+
+<form asp-controller="Rental" asp-action="CreateRental" method="post">
+    <div class="form-group">
+        <label for="movieId">Selected Movie:</label>
+        <p>@Model.Title</p>
+        @if (Model.MovieImage != null)
+        {
+            <img style="width:100px;height:100px;" src="data:image/*;base64,@(Convert.ToBase64String(Model.MovieImage))" alt="Movie Image">
+        }
+        else
+        {
+            <p>No Image Available</p>
+        }
+    </div>
+
+    <div class="form-group">
+        <label for="userFirstName">First Name:</label>
+        <input type="text" class="form-control" id="userFirstName" name="userFirstName" value="@User.Identity.Name" readonly>
+    </div>
+
+    <div class="form-group">
+        <label for="userEmail">Email:</label>
+        <input type="email" class="form-control" id="userEmail" name="userEmail" value="@ViewBag.UserEmail" readonly>
+    </div>
+
+    <div class="form-group">
+        <label for="NumberOfDaysRented">Number of Rental Days:</label>
+        <input type="number" class="form-control" id="NumberOfDaysRented" name="numberOfDaysRented" required>
+    </div>
+
+    <input type="hidden" name="movieId" value="@Model.Id" />
+    <input type="hidden" name="userFirstName" value="@User.Identity.Name" />
+    <input type="hidden" name="userEmail" value="@ViewBag.UserEmail" />
+
+    <button type="submit" class="btn btn-primary">Rent Movie</button>
+</form>

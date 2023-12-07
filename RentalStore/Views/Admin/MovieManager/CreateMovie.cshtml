@@ -1,0 +1,72 @@
+﻿@model MovieViewModel
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Create Movie</h2>
+
+<form asp-action="CreateMovie" method="post" enctype="multipart/form-data">
+    <div class="form-group">
+        <label asp-for="Title">Title</label>
+        <input asp-for="Title" class="form-control" />
+        <span asp-validation-for="Title" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Description">Description</label>
+        <textarea asp-for="Description" class="form-control"></textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="MovieImage">Movie Image</label>
+        <input type="file" accept=".png, .jpg, .jpeg, .gif, .tif" asp-for="MovieImage" class="form-control" />
+        <span asp-validation-for="MovieImage" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Price">Price</label>
+        <input asp-for="Price" class="form-control" />
+        <span asp-validation-for="Price" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="ReleaseDate">Release Date</label>
+        <input type="date" asp-for="ReleaseDate" class="form-control" />
+        <span asp-validation-for="ReleaseDate" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="DurationMinutes">Duration (Minutes)</label>
+        <input asp-for="DurationMinutes" class="form-control" />
+        <span asp-validation-for="DurationMinutes" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Genre">Genre</label>
+        <input asp-for="Genre" class="form-control" />
+        <span asp-validation-for="Genre" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="InStock">In Stock</label>
+        <input asp-for="InStock" class="form-control" />
+        <span asp-validation-for="InStock" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Rating">Rating</label>
+        <input asp-for="Rating" class="form-control" />
+        <span asp-validation-for="Rating" class="text-danger"></span>
+    </div>
+
+    <!-- Add other form fields for other properties as needed -->
+
+    <button type="submit" class="btn btn-primary">Create Movie</button>
+    <a asp-action="MovieManager" class="btn btn-primary">Cancel</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
