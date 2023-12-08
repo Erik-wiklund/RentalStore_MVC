@@ -5,38 +5,54 @@
 	ViewData["Title"] = "Index";
 	Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<h1>Rentals</h1>
+<h1>Manage Rentals</h1>
+<p>
+	<a asp-action="CreateRentalAdmin" asp-controller="Admin">Create New Rental</a>
+</p>
+<form asp-controller="Admin" asp-action="RentalManager" method="get">
+	<p>
+		<select name="searchType">
+			<option value="All">All</option>
+			<option value="CustomerName">Customer Name</option>
+			<option value="MovieName">Movie Name</option>
+			<option value="DateRented">Rented Date</option>
+			<option value="DateReturned">Returned Date</option>
+			<option value="NotReturned">Movies not returned</option>
+			<option value="DaysRented">Number of days rented</option>
+			<!-- Add other search types as needed -->
+		</select>
+
+		Title: <input type="text" name="searchString" />
+		<input type="submit" value="Filter" />
+	</p>
+</form>
+
+
+
 <table class="table table-striped">
 	<thead>
 		<tr>
-			<th>Title</th>
+			<th>Customer</th>
+			<th>Movie title</th>
 			<th>Date Rented</th>
 			<th>Days rented</th>
 			<th>Image</th>
 			<th>Returned</th>
 			<th>Date returned</th>
 			<th>Return movie</th>
-			<th>Watch movie</th>
-			<th>Review</th>
+			<th>View Details</th>
+			<th>Delete Rental</th>
 
 		</tr>
 	</thead>
 	<tbody>
 		@if (Model != null)
 		{
-			@if (ViewBag.WarningMessages != null && ViewBag.WarningMessages.Count > 0)
-			{
-				foreach (var warningMessage in ViewBag.WarningMessages)
-				{
-					<div class="alert alert-danger" role="alert">
-						@warningMessage
-					</div>
-				}
-			}
 
 			@foreach (var rental in Model)
 			{
 				<tr>
+					<td>@rental.Customer.FirstName</td>
 					<td>@rental.Movie.Title</td>
 					<td>@rental.DateRented.ToString("yyyy/MM/dd")</td>
 					<td>@rental.NumberOfDaysRented</td>
@@ -71,10 +87,10 @@
 							</form>
 						</td>
 						<td>
-							<a class="btn btn-primary" asp-route-streamId="@rental.Id">Stream</a>
+							<a class="btn btn-primary" asp-route-rentalId="@rental.Id">Details</a>
 						</td>
 						<td>
-							<a class="btn btn-primary" style="pointer-events:none;">Leave Review</a>
+							<a class="btn btn-primary" asp-route-rentalId="@rental.Id">Delete</a>
 						</td>
 					}
 					else
@@ -85,10 +101,10 @@
 							</form>
 						</td>
 						<td>
-							<a class="btn btn-primary" style="pointer-events:none;" asp-route-streamId="@rental.Id">Stream</a>
+							<a class="btn btn-primary" asp-route-rentalId="@rental.Id">Details</a>
 						</td>
 						<td>
-							<a asp-action="CreateReview" asp-controller="Rental" asp-route-rentalId="@rental.Id" class="btn btn-primary">Leave Review</a>
+							<a class="btn btn-primary" asp-route-rentalId="@rental.Id">Delete</a>
 						</td>
 					}
 				</tr>
