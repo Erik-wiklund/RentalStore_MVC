@@ -408,7 +408,6 @@ namespace RentalStore.Controllers
 						return View("Index");
 					}
 					break;
-
 				case "DateRented":
 					DateTime searchDate;
 					if (DateTime.TryParse(searchString, out searchDate))
@@ -427,6 +426,44 @@ namespace RentalStore.Controllers
 					rentals = rentals.Where(r => !r.IsReturned).ToList();
 					break;
 			}
+
+			List<string> warningMessages = new List<string>(); // Initialize outside the loop
+			List<Rental> rentalsToUpdate = new List<Rental>(); // Collect rentals to update
+
+			foreach (var rental in rentals)
+			{
+				var dueDate = rental.DateRented.AddDays(rental.NumberOfDaysRented);
+
+				if (!rental.IsReturned)
+				{
+					var remainingDays = (dueDate - DateTime.Now).Days;
+
+					// Check if a warning should be displayed (e.g., exactly 2 days left on due date)
+					if (remainingDays <= 2)
+					{
+						warningMessages.Add($"Warning: The movie '{rental.Movie.Title}' is to be due within {remainingDays} days.");
+					}
+
+					// Check if the due date has passed, add rental to update list
+					if (remainingDays < 0)
+					{
+						rental.IsReturned = true;
+						rental.DateReturned = DateTime.Now;
+
+						// Add to the list for batch update
+						rentalsToUpdate.Add(rental);
+					}
+				}
+			}
+
+			// Batch update the rentals in the database
+			foreach (var rental in rentalsToUpdate)
+			{
+				context.Entry(rental).State = EntityState.Modified;
+			}
+
+			// Save changes to the database
+			await context.SaveChangesAsync();
 
 			var rentalViewModels = rentals.Select(rental => new RentalViewModel
 			{
@@ -452,11 +489,11 @@ namespace RentalStore.Controllers
 				return View("Index");
 			}
 
+			// Assign the warning messages to ViewBag
+			ViewBag.WarningMessages = warningMessages;
+
 			return View("RentalManager", rentalViewModels);
 		}
-
-
-
 
 	}
 }

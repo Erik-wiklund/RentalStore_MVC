@@ -47,7 +47,7 @@ namespace RentalStore.Controllers
 					// Check if a warning should be displayed (e.g., exactly 2 days left on due date)
 					if (remainingDays <= 2)
 					{
-						warningMessages.Add($"Warning: The movie '{rental.Movie.Title}' will be automatically returned or return it yourself within {remainingDays} days.");
+						warningMessages.Add($"Warning: The movie '{rental.Movie.Title}' will soon be automatically returned or return it yourself within {remainingDays} days.");
 					}
 
 					// Check if the due date has passed, auto-return the movie

@@ -48,6 +48,15 @@
 	<tbody>
 		@if (Model != null)
 		{
+			@if (ViewBag.WarningMessages != null && ViewBag.WarningMessages.Count > 0)
+			{
+				foreach (var warningMessage in ViewBag.WarningMessages)
+				{
+					<div class="alert alert-danger" role="alert">
+						@warningMessage
+					</div>
+				}
+			}
 
 			@foreach (var rental in Model)
 			{
