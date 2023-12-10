@@ -75,3 +75,41 @@ footer {
 #sidebar {
     margin:10px;
 }
+
+nav {
+    display: flex;
+    justify-content: space-around;
+    /*background-color: #ddd;*/
+    padding: 10px;
+}
+
+section {
+    margin: 20px 0;
+}
+
+nav a {
+    color: #007bff;
+    text-decoration: none;
+    padding: 10px;
+    margin: 0 10px;
+    border-bottom: 2px solid transparent;
+    transition: border-bottom 0.3s ease-in-out;
+}
+
+nav a:hover {
+    border-bottom: 2px solid #0056b3; /* Change the hover color */
+    /*background-color: #f0f0f0;*/ /* Add a background color on hover */
+}
+
+nav .dropdown-menu {
+    background-color: #f8f9fa; /* Dropdown background color */
+}
+
+nav .dropdown-item {
+    color: #007bff;
+    width:unset;
+}
+
+    nav .dropdown-item:hover {
+        background-color: #cce5ff; /* Change the hover background color */
+    }

@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RentalStore.Data;
 
@@ -10,9 +11,11 @@ using RentalStore.Data;
 namespace RentalStore.Migrations
 {
     [DbContext(typeof(RentalStoreContext))]
-    partial class RentalStoreContextModelSnapshot : ModelSnapshot
+    [Migration("20231210095126_Add menu, and tvshow model")]
+    partial class Addmenuandtvshowmodel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
