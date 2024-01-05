@@ -254,6 +254,9 @@ namespace RentalStore.Migrations
                         .IsRequired()
                         .HasColumnType("longblob");
 
+                    b.Property<int?>("RentalPlanId")
+                        .HasColumnType("int");
+
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("longtext");
 
@@ -275,6 +278,8 @@ namespace RentalStore.Migrations
                     b.HasIndex("NormalizedUserName")
                         .IsUnique()
                         .HasDatabaseName("UserNameIndex");
+
+                    b.HasIndex("RentalPlanId");
 
                     b.ToTable("AspNetUsers", "Identity");
                 });
@@ -358,6 +363,28 @@ namespace RentalStore.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Rentals", "Identity");
+                });
+
+            modelBuilder.Entity("RentalStore.Models.RentalPlan", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<float>("Price")
+                        .HasColumnType("float");
+
+                    b.Property<string>("RentalPlanName")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("id");
+
+                    b.ToTable("rentalPlans", "Identity");
                 });
 
             modelBuilder.Entity("RentalStore.Models.Review", b =>
@@ -509,6 +536,15 @@ namespace RentalStore.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("RentalStore.Areas.Identity.Data.ApplicationUser", b =>
+                {
+                    b.HasOne("RentalStore.Models.RentalPlan", "RentalPlan")
+                        .WithMany()
+                        .HasForeignKey("RentalPlanId");
+
+                    b.Navigation("RentalPlan");
                 });
 
             modelBuilder.Entity("RentalStore.Models.Rental", b =>

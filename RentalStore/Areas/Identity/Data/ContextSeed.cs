@@ -14,6 +14,37 @@ namespace RentalStore.Areas.Identity.Data
             await roleManager.CreateAsync(new IdentityRole(Enums.Roles.Basic.ToString()));
         }
 
+        public static async Task SeedRentalPlansAsync(RentalStoreContext context)
+        {
+            if (!context.RentalPlans.Any())
+            {
+                var rentalPlans = new List<RentalPlan>
+        {
+            new RentalPlan
+            {
+                RentalPlanName = "Basic",
+                Description = "test",
+                Price = 100,
+            },
+             new RentalPlan
+            {
+                RentalPlanName = "Medium",
+                Description = "test",
+                Price = 100,
+            },
+              new RentalPlan
+            {
+                RentalPlanName = "Large",
+                Description = "test",
+                Price = 100,
+            },
+        };
+                context.RentalPlans.AddRange(rentalPlans);
+                await context.SaveChangesAsync();
+            }
+        }
+
+
         public static async Task SeedAdminAsync(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
         {
             //Seed Default User
